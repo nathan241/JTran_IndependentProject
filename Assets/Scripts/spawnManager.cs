@@ -24,5 +24,8 @@ public class spawnManager : MonoBehaviour
         float Y = 0;
         Vector3 randPos = new Vector3(randX, Y, randZ);
         Instantiate(fish[0], randPos, fish[0].transform.rotation);
+
     }
+
+   
 }
