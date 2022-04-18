@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class PlayerMotor : MonoBehaviour
 {
     NavMeshAgent agent;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -17,7 +18,7 @@ public class PlayerMotor : MonoBehaviour
         
     }
 
-    public void MoveToPoint (Vector3 point)
+    public void MoveToPoint(Vector3 point)
     {
         agent.SetDestination(point);
     }
