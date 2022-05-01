@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     public AudioClip footSteps;
 
+
     private AudioSource asPlayer;
 
 
@@ -67,7 +68,10 @@ public class PlayerController : MonoBehaviour
         {
             CreateDust();
             if (!asPlayer.isPlaying)
-                asPlayer.PlayOneShot(footSteps, .5f);
+            {
+                asPlayer.PlayOneShot(footSteps, 0.5f);
+
+            }
         }
         else
         {
@@ -78,7 +82,6 @@ public class PlayerController : MonoBehaviour
     void CreateDust()
     {
         dust.Play();
-
     }
 
     void StopDust()
