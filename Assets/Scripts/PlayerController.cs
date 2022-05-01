@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
         if (isMoving == true)
         {
             CreateDust();
+            if (!asPlayer.isPlaying)
+                asPlayer.PlayOneShot(footSteps, .5f);
         }
         else
         {
@@ -76,7 +78,7 @@ public class PlayerController : MonoBehaviour
     void CreateDust()
     {
         dust.Play();
-        asPlayer.PlayOneShot(footSteps,.5f);
+
     }
 
     void StopDust()
