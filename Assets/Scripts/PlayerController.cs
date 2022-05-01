@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem dust;
 
     public AudioClip footSteps;
-    public bool alreadyPlayed = false;
+
 
     private AudioSource asPlayer;
 
@@ -67,6 +67,11 @@ public class PlayerController : MonoBehaviour
         if (isMoving == true)
         {
             CreateDust();
+            if (!asPlayer.isPlaying)
+            {
+                asPlayer.PlayOneShot(footSteps, 0.5f);
+
+            }
         }
         else
         {
@@ -77,11 +82,6 @@ public class PlayerController : MonoBehaviour
     void CreateDust()
     {
         dust.Play();
-        if (!alreadyPlayed)
-        {
-            asPlayer.PlayOneShot(footSteps, .5f);
-            alreadyPlayed = true;
-        }
     }
 
     void StopDust()
