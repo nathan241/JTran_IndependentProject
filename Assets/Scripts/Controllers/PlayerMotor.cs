@@ -22,4 +22,9 @@ public class PlayerMotor : MonoBehaviour
     {
         agent.SetDestination(point);
     }
+
+    public void MoveToEnemy(Vector3 attackPosition)
+    {
+        agent.SetDestination(attackPosition);
+    }
 }
