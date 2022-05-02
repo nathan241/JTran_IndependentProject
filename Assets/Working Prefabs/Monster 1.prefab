@@ -189,12 +189,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5094963284594708403}
   - component: {fileID: 5096451570326151914}
-  - component: {fileID: 5130021969099339455}
-  - component: {fileID: 5129445021120380957}
   - component: {fileID: 5096451570326151889}
   - component: {fileID: 5096451570326151888}
   - component: {fileID: 5096451570326151916}
   - component: {fileID: 362800665039585216}
+  - component: {fileID: 4189912587744082121}
   m_Layer: 0
   m_Name: Monster 1
   m_TagString: monster
@@ -211,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 5097743392631653211}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000058114523}
   m_LocalPosition: {x: 9.844076, y: 6, z: -89.550514}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 5091965331836891273}
   - {fileID: 5094874924831532893}
@@ -240,38 +239,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!111 &5130021969099339455
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5097743392631653211}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 0b8e59d3be9956c4da74701ae1064262, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 0b8e59d3be9956c4da74701ae1064262, type: 2}
-  - {fileID: 7400000, guid: 0e92216e76934164ebc2ff6dcb6caa6a, type: 2}
-  - {fileID: 7400000, guid: baceae3f2e2c08347a2dd9417bd241ae, type: 2}
-  - {fileID: 7400000, guid: ceef6f883ed4525408dd849615e6bcd6, type: 2}
-  - {fileID: 7400000, guid: 6ce5fa5de2f067548b4d191e6f92c50d, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
---- !u!114 &5129445021120380957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5097743392631653211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87f998754931e6249a29867bfd98ab6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &5096451570326151889
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -338,8 +305,21 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: 4, z: 4}
+  m_Size: {x: 4.5, y: 4.5, z: 4.5}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &4189912587744082121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5097743392631653211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2e07a5e10720b48a11ab5b34c5c557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: 1
 --- !u!1 &5098053537429715961
 GameObject:
   m_ObjectHideFlags: 0
