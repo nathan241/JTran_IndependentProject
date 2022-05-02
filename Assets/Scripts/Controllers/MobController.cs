@@ -30,10 +30,7 @@ public class MobController : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         navMeshAgent = GetComponent<NavMeshAgent>();
-
         battleTransition = GetComponent<BattleTransition>();
-
-        //mover = GetCompnent<Mover>();
         guardPosition = transform.position;
     }
 

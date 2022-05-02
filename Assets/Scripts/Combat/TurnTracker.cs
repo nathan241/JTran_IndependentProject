@@ -55,7 +55,12 @@ public class TurnTracker : MonoBehaviour
         if(playerTurn == true)
         {
             SetPlayerTurn(false);
-
+            SetEnemyTurn(true);
+        }
+        else if ( playerTurn == false)
+        {
+            SetPlayerTurn(true);
+            SetEnemyTurn(false);
         }
     }
 }

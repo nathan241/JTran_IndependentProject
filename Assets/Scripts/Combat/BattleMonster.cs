@@ -1,33 +1,132 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BattleMonster : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
+    public TurnTracker turnTracker;
+    bool playerTurn = true;
+    bool enemyTurn = false;
+    public GameObject enemyAttackPosition;
+    public float movementTime = 2f;
+    public float rotationSpeed = 3f;
+    public float returnDelay = 1f;
+    public float endOfTurnDelay = 1f;
+    bool coroutineStarted = false;
+    public GameObject player;
+    PlayerCombat playerCombat;
+    bool dead = false;
+    public Animator animator;
+    bool deathStarted = false;
+
+
+
+    BattleTransition battleTransition;
+    NavMeshAgent navMeshAgent;
+    Vector3 startPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-
+        startPosition = transform.position;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        battleTransition = GetComponent<BattleTransition>();
+        playerCombat = player.GetComponent<PlayerCombat>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        UpdateTurns();
+        Death();
+        EnemyAttack();
+    }
+
+    public void Death()
+    {
+        if(currentHealth <= 0 && deathStarted == false)
         {
-            TakeDamage(20);
+            deathStarted = true;
+            dead = true;
+            StartCoroutine(DeathCoroutine());
         }
     }
 
-    void TakeDamage(int damage)
+    IEnumerator DeathCoroutine()
+    {
+        animator.SetBool("isDead", true);
+        yield return new WaitForSeconds(3);
+
+        StartCoroutine(battleTransition.Transition());
+
+    }
+
+
+
+    public void UpdateTurns()
+    {
+        playerTurn = turnTracker.GetPlayerTurn();
+        enemyTurn = turnTracker.GetEnemyTurn();
+    }
+
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
+
+    public void EnemyAttack()
+    {
+        if (coroutineStarted == false && playerTurn == false && dead == false)
+        {
+            coroutineStarted = true;
+            StartCoroutine(EnemyAttackCoroutine());
+        }
+
+
+    }
+
+
+    IEnumerator EnemyAttackCoroutine()
+    {
+
+        navMeshAgent.SetDestination(enemyAttackPosition.transform.position);
+     
+        yield return new WaitForSeconds(movementTime);
+        print("waiting for movement time ended");
+            
+
+        if (Vector3.Distance(enemyAttackPosition.transform.position, gameObject.transform.position) < 0.1f)
+        {
+         playerCombat.TakeDamage(5);
+         print("damagetaken");
+        }
+
+        yield return new WaitForSeconds(returnDelay);
+        navMeshAgent.SetDestination(startPosition);
+        yield return new WaitForSeconds(movementTime);
+
+        var oldRotation = transform.rotation;
+        transform.Rotate(0, 165, 0);
+        var newRotation = transform.rotation;
+        for (float t = 0; t <= 1.0; t += Time.deltaTime * rotationSpeed)
+        {
+            transform.rotation = Quaternion.Slerp(oldRotation, newRotation, t);
+            yield return null;
+        }
+        transform.rotation = newRotation;
+        yield return new WaitForSeconds(endOfTurnDelay);
+        turnTracker.NextTurn();
+        coroutineStarted = false;
+
+    }
 }
+
+

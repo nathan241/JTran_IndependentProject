@@ -12,11 +12,10 @@ public class PlayerController : MonoBehaviour
     bool isMoving;
     NavMeshAgent navMeshAgent;
     public ParticleSystem dust;
-
+    public float speedBoost;
     public AudioClip footSteps;
-
-
     private AudioSource asPlayer;
+    public GameObject powerUp;
 
 
     void Start()
@@ -29,8 +28,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         CheckMovement();
@@ -42,12 +39,27 @@ public class PlayerController : MonoBehaviour
 
             if(Physics.Raycast(ray,out hit, 50, movementMask))
             {
-
                     motor.MoveToPoint(hit.point);
             }
         }
-        
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "PowerUp")
+        {
+            navMeshAgent.speed = 15;
+            Destroy(other.gameObject);
+            StartCoroutine(PowerUp());
+            
+        }
+    }
+    IEnumerator PowerUp()
+    {
+        yield return new WaitForSeconds(7);
+        navMeshAgent.speed = 5;
+    }
+
     void CheckMovement()
     {
         if (navMeshAgent.velocity.magnitude <= 0.1)  
