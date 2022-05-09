@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class BattleMonster : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth;
+    public float maxHealth = 100;
+    public float currentHealth;
     public HealthBar healthBar;
     public TurnTracker turnTracker;
     bool playerTurn = true;
@@ -17,6 +17,7 @@ public class BattleMonster : MonoBehaviour
     public float returnDelay = 1f;
     public float endOfTurnDelay = 1f;
     bool coroutineStarted = false;
+    public float damage = 10.0f;
     public GameObject player;
     PlayerCombat playerCombat;
     bool dead = false;
@@ -76,7 +77,7 @@ public class BattleMonster : MonoBehaviour
         enemyTurn = turnTracker.GetEnemyTurn();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
@@ -105,7 +106,7 @@ public class BattleMonster : MonoBehaviour
 
         if (Vector3.Distance(enemyAttackPosition.transform.position, gameObject.transform.position) < 0.1f)
         {
-         playerCombat.TakeDamage(5);
+         playerCombat.TakeDamage(damage);
          print("damagetaken");
         }
 

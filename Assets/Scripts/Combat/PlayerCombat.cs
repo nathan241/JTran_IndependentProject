@@ -8,8 +8,8 @@ public class PlayerCombat : MonoBehaviour
     Camera cam;
     PlayerMotor motor;
     public LayerMask clickableInCombat;
-    public int maxHealth = 100;
-    public int currentHealth;
+    public float maxHealth = 100;
+    public float currentHealth;
     public HealthBar healthBar;
     public float movementTime = 1f;
     public float returnDelay = 1f;
@@ -17,7 +17,9 @@ public class PlayerCombat : MonoBehaviour
     public float endOfTurnDelay = 1f;
     public TurnTracker turnTracker;
     bool playerTurn = true;
+    public float damage = 20.0f;
     public GameObject enemyMonster;
+    bool attackInitiated = false;
     BattleMonster battleMonster;
 
     Vector3 startPosition;
@@ -46,7 +48,7 @@ public class PlayerCombat : MonoBehaviour
         playerTurn = turnTracker.GetPlayerTurn();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
@@ -55,9 +57,10 @@ public class PlayerCombat : MonoBehaviour
 
     public void PlayerAttack()
     {
-        if (Input.GetMouseButtonDown(0) && playerTurn == true)
+        if (Input.GetMouseButtonDown(0) && playerTurn == true && attackInitiated == false)
         {
-            StartCoroutine(PlayerAttackCoroutine()); 
+            StartCoroutine(PlayerAttackCoroutine());
+            attackInitiated = true;
         }
     }
 
@@ -78,8 +81,7 @@ public class PlayerCombat : MonoBehaviour
 
             if (Vector3.Distance(hit.transform.Find("attackPosition").transform.position, gameObject.transform.position) < 0.1f)
             {
-                battleMonster.TakeDamage(50);
-                print("damagetaken");
+                battleMonster.TakeDamage(damage);
             }
 
             yield return new WaitForSeconds(returnDelay);
@@ -98,6 +100,7 @@ public class PlayerCombat : MonoBehaviour
 
             yield return new WaitForSeconds(endOfTurnDelay);
             turnTracker.NextTurn();
+            attackInitiated = false;
         }
 
     }

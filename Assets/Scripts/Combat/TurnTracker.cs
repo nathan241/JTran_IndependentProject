@@ -7,12 +7,17 @@ public class TurnTracker : MonoBehaviour
     bool playerTurn = true;
     bool enemyTurn = false;
     int turnNumber = 1;
+    public GameObject player;
+    public GameObject enemy;
+    PlayerCombat playerCombat;
+    BattleMonster battleMonster;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerCombat = player.GetComponent<PlayerCombat>();
+        battleMonster = enemy.GetComponent<BattleMonster>();
     }
 
     // Update is called once per frame
@@ -55,11 +60,17 @@ public class TurnTracker : MonoBehaviour
         if(playerTurn == true)
         {
             SetPlayerTurn(false);
+            playerCombat.enabled = false;
+            battleMonster.enabled = true;
             SetEnemyTurn(true);
+
         }
         else if ( playerTurn == false)
         {
             SetPlayerTurn(true);
+            playerCombat.enabled = true;
+            battleMonster.enabled = false;
+            //disable enemy combat script
             SetEnemyTurn(false);
         }
     }
