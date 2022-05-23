@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using RPG.Saving;
 
 
 
-public class MobController : MonoBehaviour
+public class MobController : MonoBehaviour // ISaveable
 {
     [SerializeField] float chaseDistance = 5f;
     [SerializeField] float suspiciousTime = 2f;
@@ -129,8 +130,21 @@ public class MobController : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            StartCoroutine(battleTransition.Transition());
+            StartCoroutine(battleTransition.TransitionToBattle());
         }
     }
+
+/*    public object CaptureState()
+    {
+        return new SerializableVector3(transform.position);
+    }
+
+    public void RestoreState(object state)
+    {
+        SerializableVector3 position = (SerializableVector3)state;
+        GetComponent<NavMeshAgent>().enabled = false;
+        transform.position = position.ToVector();
+        GetComponent<NavMeshAgent>().enabled = true;
+    }*/
 }
 

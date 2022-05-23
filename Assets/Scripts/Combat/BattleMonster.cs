@@ -63,7 +63,7 @@ public class BattleMonster : MonoBehaviour
     IEnumerator DeathCoroutine()
     {
         animator.SetBool("isDead", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
 
         StartCoroutine(battleTransition.Transition());
 
@@ -97,17 +97,21 @@ public class BattleMonster : MonoBehaviour
 
     IEnumerator EnemyAttackCoroutine()
     {
-
+        print(enemyAttackPosition.transform.position);
         navMeshAgent.SetDestination(enemyAttackPosition.transform.position);
+        //navMeshAgent.SetDestination(enemyAttackPosition.transform.position);
      
         yield return new WaitForSeconds(movementTime);
-        print("waiting for movement time ended");
+        
             
 
-        if (Vector3.Distance(enemyAttackPosition.transform.position, gameObject.transform.position) < 0.1f)
+        if (Vector3.Distance(enemyAttackPosition.transform.position, gameObject.transform.position) < 1f)
         {
-         playerCombat.TakeDamage(damage);
-         print("damagetaken");
+            animator.SetBool("isAttacking", true);
+            yield return new WaitForSeconds(returnDelay);
+            playerCombat.TakeDamage(damage);
+            animator.SetBool("isAttacking", false);
+
         }
 
         yield return new WaitForSeconds(returnDelay);
@@ -115,8 +119,8 @@ public class BattleMonster : MonoBehaviour
         yield return new WaitForSeconds(movementTime);
 
         var oldRotation = transform.rotation;
-        transform.Rotate(0, 165, 0);
-        var newRotation = transform.rotation;
+
+        var newRotation = Quaternion.Euler(0, 90, 0);
         for (float t = 0; t <= 1.0; t += Time.deltaTime * rotationSpeed)
         {
             transform.rotation = Quaternion.Slerp(oldRotation, newRotation, t);

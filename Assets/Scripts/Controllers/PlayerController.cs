@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip footSteps;
     private AudioSource asPlayer;
     public GameObject powerUp;
+    Animator animator;
 
 
     void Start()
@@ -25,6 +26,8 @@ public class PlayerController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         asPlayer = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
+        animator.SetBool("isBattling", false);
 
     }
 
@@ -36,11 +39,21 @@ public class PlayerController : MonoBehaviour
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
             if(Physics.Raycast(ray,out hit, 50, movementMask))
             {
-                    motor.MoveToPoint(hit.point);
+                motor.MoveToPoint(hit.point);
             }
+        }
+
+        if (navMeshAgent.velocity.magnitude >= .00001f)
+        {
+            
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            
+            animator.SetBool("isMoving", false);
         }
     }
 

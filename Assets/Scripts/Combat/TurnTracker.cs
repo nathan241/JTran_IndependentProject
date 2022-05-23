@@ -9,8 +9,11 @@ public class TurnTracker : MonoBehaviour
     int turnNumber = 1;
     public GameObject player;
     public GameObject enemy;
+    public BattleSpawn battleSpawn;
     PlayerCombat playerCombat;
     BattleMonster battleMonster;
+    int numberOfMonsters;
+
 
 
     // Start is called before the first frame update
@@ -18,12 +21,17 @@ public class TurnTracker : MonoBehaviour
     {
         playerCombat = player.GetComponent<PlayerCombat>();
         battleMonster = enemy.GetComponent<BattleMonster>();
+
+        playerCombat.enabled = true;
+        player.GetComponent<PlayerController>().enabled = false;
+        //numberOfMonsters = battleSpawn.GetNumberOfMonsters();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public int GetTurnNumber()
